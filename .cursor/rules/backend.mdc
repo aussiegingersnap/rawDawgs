@@ -1,0 +1,62 @@
+---
+description: Backend
+globs: 
+alwaysApply: false
+---
+# Backend Rules
+
+## Core Principles
+- Fast & modular architecture
+- Minimize database queries (prevent N+1)
+- Use connection pooling and caching
+- Separate concerns clearly
+
+## API Structure
+```
+app/api/
+├── auth/route.ts
+├── users/[id]/route.ts
+├── middleware/
+└── lib/supabase.ts
+```
+
+## Route Pattern
+```typescript
+export async function POST(request: NextRequest) {
+  // 1. Parse & validate (Zod)
+  // 2. Auth check (supabase.auth.getUser())
+  // 3. Business logic  
+  // 4. Return response
+}
+```
+
+## Supabase Best Practices
+- Use `select()` for specific columns
+- Implement pagination with `range()`
+- Use `single()` for single records
+- Always check for errors
+- Use service role key for admin operations
+
+## Security
+- **Validate all inputs** - Zod schemas for every endpoint
+- **Never expose sensitive data** - Filter responses, audit logs
+- **Implement rate limiting** - Per IP, per user, per endpoint
+- **Use parameterized queries** - Supabase handles this automatically
+- **Validate environment variables** - On startup with Zod
+- **Authenticate everything** - Check auth.uid() for protected routes
+- **Use CORS properly** - Restrict origins, credentials
+- **Implement CSRF protection** - For state-changing operations
+- **Audit API access** - Log sensitive operations
+- **Use RBAC** - Role-based access control with Supabase RLS
+
+## Error Handling
+- Return appropriate HTTP status codes
+- Log errors with context
+- Implement proper error boundaries
+- Provide meaningful error messages
+
+## Performance
+- Use indexes strategically
+- Implement caching layers
+- Optimize query patterns
+- Monitor query performance

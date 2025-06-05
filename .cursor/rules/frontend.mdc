@@ -1,0 +1,68 @@
+---
+description: 
+globs: *.json,*.ts,*.tsx,*.html
+alwaysApply: false
+---
+# Frontend Rules
+
+## Core Principles
+- Components <100 lines, single responsibility
+- TypeScript strict mode, no `any` types
+- DRY: extract common logic to hooks/utils
+- Server Components default, Client Components only when needed
+
+## Monorepo Structure
+```
+apps/web/src/
+├── app/           # Next.js app directory
+├── components/    # App-specific components
+└── lib/           # App-specific utils
+
+packages/ui/src/
+├── components/    # Shared UI components
+├── icons/         # Tabler icons exports
+└── styles/        # Shared Tailwind styles
+
+packages/config/
+├── eslint/        # Shared ESLint config
+├── tailwind/      # Shared Tailwind config
+└── typescript/    # Shared TS config
+```
+
+## Component Pattern
+```typescript
+// 1. Imports (external → internal)
+// 2. Types/Interfaces
+// 3. Component with hooks first
+// 4. Early returns
+// 5. Main render
+```
+
+## Rules
+- Use `useState` for local, `useReducer` for complex state
+- `React.memo`/`useMemo`/`useCallback` only when profiling shows benefit
+- Tailwind CSS only, use `cn()` for conditional classes
+- React Hook Form + Zod for forms
+- Always implement Error Boundaries
+- Proper accessibility: semantic HTML, ARIA labels, keyboard nav
+
+## Monorepo Patterns
+- Import shared components: `import { Button } from '@repo/ui'`
+- Use workspace dependencies in package.json
+- Shared configs extend from `@repo/config/*`
+- Build shared packages before apps (Turborepo handles this)
+
+## Security
+- **Never expose API keys** - Use server-side proxies for third-party APIs
+- **Validate user inputs** - Use Zod schemas, sanitize before display
+- **Implement CSP** - Content Security Policy in next.config.js
+- **Use secure headers** - HSTS, X-Frame-Options, X-Content-Type-Options
+- **Auth state protection** - Check authentication before rendering sensitive UI
+- **Prevent XSS** - Escape user content, avoid dangerouslySetInnerHTML
+- **Secure cookies** - httpOnly, secure, sameSite flags
+
+## Performance
+- Next.js Image component for images
+- Dynamic imports for code splitting
+- Proper caching strategies
+- Monitor bundle size

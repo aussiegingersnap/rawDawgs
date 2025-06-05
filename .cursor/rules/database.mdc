@@ -1,0 +1,71 @@
+---
+description: Supabase database
+globs: 
+alwaysApply: false
+---
+# Database Rules - Supabase
+
+## Core Principles
+- Always enable Row Level Security (RLS)
+- Use least privilege principle
+- Create indexes for frequently queried columns
+- Use appropriate data types and constraints
+
+## Schema Patterns
+```sql
+-- Base table
+CREATE TABLE user (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  email text UNIQUE NOT NULL,
+  created_at timestamptz DEFAULT now(),
+  updated_at timestamptz DEFAULT now()
+);
+
+-- Enable RLS
+ALTER TABLE user ENABLE ROW LEVEL SECURITY;
+
+-- User can view own data
+CREATE POLICY "Users can view own profile" ON user
+  FOR SELECT USING (auth.uid() = id);
+```
+
+## Data Types
+```sql
+-- Primary keys
+id uuid DEFAULT gen_random_uuid() PRIMARY KEY
+
+-- Constraints  
+email text CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$')
+price decimal(10,2) CHECK (price >= 0)
+metadata jsonb DEFAULT '{}'::jsonb
+```
+
+## Indexing
+```sql
+-- Single column
+CREATE INDEX idx_user_email ON user(email);
+
+-- Composite (order matters)
+CREATE INDEX idx_user_status_created ON user(status, created_at);
+
+-- Partial for performance
+CREATE INDEX idx_active_users ON user(email) WHERE status = 'active';
+```
+
+## Security
+- **Enable RLS always** - On all user-facing tables, no exceptions
+- **Use auth.uid()** - For user identification in policies
+- **Validate at DB level** - Check constraints, triggers for validation
+- **Use SECURITY DEFINER carefully** - Audit functions that bypass RLS
+- **Audit sensitive operations** - Log changes to critical data
+- **Least privilege principle** - Users see only their own data
+- **Encrypt sensitive columns** - PII, payment info, secrets
+- **Regular security reviews** - Audit policies, permissions quarterly
+- **Use enums for status** - Prevent invalid state injection
+- **Backup with encryption** - Secure data at rest
+
+## Performance
+- Use `EXISTS` instead of `IN`
+- Implement proper pagination with `LIMIT/OFFSET`
+- Monitor slow queries
+- Use materialized views for complex aggregations

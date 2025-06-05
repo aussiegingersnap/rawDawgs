@@ -1,0 +1,127 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Project Rules
+
+## Tech Stack
+- **Architecture**: Turborepo monorepo (apps/ + packages/)
+- **Frontend**: Next.js 13+ with TypeScript, App Router, Server Components
+- **Styling**: Tailwind CSS + Shadcn UI components
+- **Backend**: Supabase (PostgreSQL + Auth + Real-time + Edge Functions)
+- **Icons**: Tabler Icons (@tabler/icons-react)
+- **Deployment**: Railway auto-deploy from main branch
+- **Package Manager**: pnpm with workspaces
+- **Build System**: Turborepo with caching and parallel execution
+
+## Core Principles
+- **NEVER** modify or commit .env files
+- **ALWAYS** ask user before changing configs
+- **NEVER** expose sensitive data
+- **ALWAYS** validate environment variables on startup
+
+## Monorepo Structure
+```
+apps/
+├── web/          # Next.js main app
+├── api/          # Standalone API (optional)
+└── admin/        # Admin dashboard (optional)
+packages/
+├── ui/           # Shared UI components
+├── config/       # Shared configs (ESLint, Tailwind, etc)
+├── database/     # Database schemas & migrations
+└── utils/        # Shared utilities
+```
+
+## User Confirmation Required
+Ask before:
+- Adding environment variables
+- Changing database schema
+
+## Environment Variables
+```bash
+# Root .env.example (committed)
+NEXT_PUBLIC_SUPABASE_URL=your_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_key
+
+# Apps inherit from root or have own .env files
+# apps/web/.env.local
+# apps/admin/.env.local
+```
+
+## Stack Integration
+```bash
+# Start development (all apps)
+turbo dev                              # Next.js + Supabase local
+
+# Build for production  
+turbo build                            # Optimized builds + Railway deploy
+
+# Package management
+pnpm add @tabler/icons-react --filter=@repo/ui   # Add to UI package
+pnpm add @supabase/supabase-js --filter=web      # Add to web app
+
+# Database operations
+npx supabase start                     # Local Supabase stack
+npx supabase db push                   # Push schema changes
+npx supabase gen types typescript     # Generate TypeScript types
+```
+
+## Turborepo Commands
+```bash
+# Build all apps and packages
+turbo build
+
+# Dev all apps  
+turbo dev
+
+# Build specific app
+turbo build --filter=web
+
+# Add dependency to specific package
+pnpm add react --filter=web
+```
+
+## Validation
+```typescript
+// packages/utils/src/env.ts - Shared environment validation
+import { z } from 'zod'
+
+const envSchema = z.object({
+  NEXT_PUBLIC_SUPABASE_URL: z.string().url(),
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
+  SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
+  NODE_ENV: z.enum(['development', 'production', 'test']),
+})
+
+export const env = envSchema.parse(process.env)
+
+// Usage in apps: import { env } from '@repo/utils'
+```
+
+## Security
+- **Never commit secrets** - Use .env files, audit commits
+- **Validate everything** - All inputs, environment variables, API responses
+- **Use HTTPS everywhere** - Production, staging, development proxy
+- **Implement CSP** - Content Security Policy headers
+- **Rate limit APIs** - Prevent abuse and DoS attacks
+- **Audit dependencies** - `npm audit` regularly, update promptly
+- **Use TypeScript strictly** - Prevents runtime type errors
+- **Sanitize outputs** - Prevent XSS in dynamic content
+
+## Security Checklist
+```bash
+# Pre-deployment security audit
+npm audit                              # Check dependencies
+git log --grep="password\|secret\|key" # Audit for leaked secrets
+grep -r "TODO.*security" .            # Find security TODOs
+turbo test                             # Ensure security tests pass
+```
+
+## Documentation
+- Maintain README.md
+- Keep CHANGELOG.md current
+- Document complex business logic
+- Update deployment procedures

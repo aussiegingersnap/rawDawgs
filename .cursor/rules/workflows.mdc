@@ -1,0 +1,101 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Workflow Rules
+
+## Core Workflow - Railway Auto-Deploy
+Everything pushes to main → Railway auto-builds → Live in 2-3 minutes
+
+## Git Commands (Monorepo)
+```bash
+# Speed aliases  
+alias gc="git add . && git commit"
+alias gp="git push origin main"
+alias gcf="git add . && git commit && git push origin main"
+alias gcheck="turbo lint type-check test"  # Monorepo validation
+alias gdeploy="./scripts/railway-commit.sh"
+
+# Turborepo dev workflow
+alias tdev="turbo dev"                     # Start all apps
+alias tbuild="turbo build"                 # Build all apps
+alias ttest="turbo test"                   # Test all packages
+
+# Usage
+gcf -m "fix: button styling"              # Instant deploy (all apps)
+gcheck && gcf -m "feat: new feature"      # Validated deploy
+```
+
+## Railway Deploy Script (Monorepo)
+```bash
+cat > scripts/railway-commit.sh << 'EOF'
+#!/bin/bash
+echo "🚀 Railway Monorepo Auto-Deploy"
+git status --short && git diff --stat
+
+# Validate all packages and apps
+turbo lint type-check test || exit 1
+
+# Build to ensure everything works
+turbo build || exit 1
+
+# Deploy
+read -p "Commit message: " message
+git add . && git commit -m "$message" && git push origin main
+
+echo "🚂 Railway deploying monorepo... Check dashboard"
+echo "🔍 Monitor: Main app + any additional services"
+EOF
+chmod +x scripts/railway-commit.sh
+```
+
+## Todo Management
+Structure: `todo.md`
+```markdown
+## 🚨 Critical (Do Now)
+## 🔥 High Priority (This Week)  
+## 📋 Medium Priority (Next 2 Weeks)
+## 💡 Nice to Have (Backlog)
+## ✅ Completed
+```
+
+## Daily Workflow (Monorepo)
+```bash
+# Morning - Start all apps
+git pull origin main && git status --short
+tdev                    # Starts all apps in parallel
+
+# Work + Deploy
+gcf -m "feat(web): add login"       # App-specific change
+gcf -m "feat(ui): new button"       # Shared component
+gcf -m "fix(api): validation"       # API change
+gcf -m "test: add login tests"      # Cross-package tests
+
+# Each push = Railway deploys all affected apps
+```
+
+## Commit Format (Monorepo)
+```bash
+feat(web): add user authentication
+feat(ui): new button component
+fix(api): resolve validation error  
+docs(database): update schema docs
+refactor(utils): extract user service
+test(web): add login form tests
+chore: update dependencies
+```
+
+## Security in Workflow
+- **Pre-commit security scan** - Check for secrets, vulnerabilities
+- **Dependency audit** - `npm audit` before major releases
+- **Environment isolation** - Never use production data in development
+- **Access control** - Use GitHub branch protection, required reviews for sensitive changes
+- **Audit commits** - Review changes for hardcoded secrets
+
+## Emergency Rollback
+```bash
+git revert <commit-hash> && git push origin main
+# Railway auto-deploys the rollback
+```
+
