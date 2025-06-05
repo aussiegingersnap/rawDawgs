@@ -1,0 +1,189 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# rawDawgs Brand Voice
+
+## Core Personality
+**Captain of Code, Pirate of Productivity, AI Whisperer Extraordinaire**
+
+Like Jack Sparrow, but instead of sailing the Caribbean, we're navigating TypeScript errors and deployment hell. We're here to plunder productivity from the clutches of overthinking and rescue your sanity from the Kraken of complexity.
+
+## Brand Pillars
+
+### 🏴‍☠️ **Rebel with a Cause**
+- "Why write boilerplate when AI can do it faster?"
+- "Your senior dev gatekeeping is showing"
+- "We don't follow best practices—we *are* the best practice"
+- "Rules are more like guidelines anyway"
+
+### 🤖 **AI-First, Ego-Last**
+- "Asking AI for help isn't cheating—it's efficiency, mate"
+- "If you're still copy-pasting from Stack Overflow in 2024, we need to talk"
+- "LLMs are our crew, not our competition"
+- "Why memorize syntax when you can memorize prompts?"
+
+### ⚡ **Speed Over Perfection**
+- "Ship fast, debug faster, apologize never"
+- "Your 'enterprise architecture' is just fancy procrastination"
+- "MVP stands for 'Most Viable Pirate'"
+- "Done is better than perfect, but deployed is better than done"
+
+### 🎯 **Gen Z Wisdom, Senior Swagger**
+- "We respect your experience, but not your outdated opinions"
+- "Young enough to embrace change, old enough to smell BS"
+- "We speak fluent meme and legacy code"
+- "TikTok attention spans, Stack Overflow depth"
+
+## Voice & Tone Guidelines
+
+### **Confrontational (But Charming)**
+```
+❌ "You might want to consider using TypeScript"
+✅ "Still writing vanilla JS in 2024? That's... a choice."
+
+❌ "This could be optimized"
+✅ "This code has more loops than a pirate's knot"
+
+❌ "Please follow our coding standards"  
+✅ "Coding standards are like pirate codes—more guidelines, really"
+```
+
+### **Witty & Self-Aware**
+```
+"We're not saying we're the best developers in the world... 
+but we're definitely in the top 10. 
+And the other 9 are our AI assistants."
+
+"Our error messages have more personality than most dating profiles"
+
+"We debug like we party—aggressively and with questionable decisions"
+```
+
+### **Antagonistic (With Love)**
+```
+"Oh, you manually deployed to production? How... vintage."
+
+"Still using create-react-app? What's next, jQuery carousels?"
+
+"Your git history looks like a crime scene, and we're the detectives"
+
+"We see you there, senior dev, writing TODO comments from 2019"
+```
+
+## Communication Style
+
+### **Documentation Tone**
+- Explain like you're teaching your slightly drunk coding buddy
+- Include warnings that sound like pirate threats
+- Make examples actually fun to read
+- Never apologize for being efficient
+
+### **Error Messages**
+```javascript
+// Instead of: "Invalid configuration"
+throw new Error("Ahoy! Your config file is more broken than a landlubber's compass")
+
+// Instead of: "Missing required field"  
+throw new Error("Missing required field, you absolute sea cucumber")
+
+// Instead of: "Database connection failed"
+throw new Error("Database walked the plank. Check your connection, savvy?")
+```
+
+### **Code Comments**
+```typescript
+// TODO: Refactor this when the rum runs out
+// HACK: This works and I'm not touching it
+// NOTE: If this breaks, blame the AI (it was probably right anyway)
+// WARNING: Abandon all hope, ye who modify this function
+```
+
+## Brand Vocabulary
+
+### **Preferred Terms**
+- "Ship it" instead of "deploy"
+- "Crew" instead of "team"  
+- "Treasure" instead of "code/features"
+- "Plunder" instead of "optimize/steal good ideas"
+- "Kraken" for any major bug/issue
+- "Landlubber" for traditional developers
+- "AI mate" for AI assistants
+- "Parley" for code reviews
+
+### **Forbidden Phrases**
+- "Best practices" (use "proven tactics")
+- "Industry standard" (use "what everyone else is doing")
+- "Technical debt" (use "code barnacles")
+- "Legacy code" (use "ancient treasure")
+- "Cutting edge" (use "sharper than a cutlass")
+
+## Content Principles
+
+### **Always Include**
+- At least one maritime metaphor per serious explanation
+- Self-deprecating humor about our own chaos
+- Gentle mockery of development pretentiousness  
+- Acknowledgment that we're all just winging it
+- Celebration of AI-assisted development
+
+### **Never Include**
+- Boring corporate speak
+- Apologetic language for being efficient
+- Shame for using AI tools
+- Gatekeeping about "real" developers
+- Taking ourselves too seriously
+
+## Examples in Practice
+
+### **README Introduction**
+```markdown
+Ahoy, fellow code pirates! 🏴‍☠️
+
+Tired of enterprise architects treating monorepos like they're planning 
+the invasion of Normandy? Fed up with "senior" developers who think 
+using AI is cheating? 
+
+Welcome to rawDawgs—where we plunder productivity from the seven seas 
+of software development and make landlubbers walk the plank of legacy thinking.
+```
+
+### **Error Documentation**
+```markdown
+## When Things Go Sideways (They Will)
+
+Listen, even the best pirates run aground sometimes. When your code 
+starts acting like a mutinous crew, here's how to restore order:
+
+1. Check the logs (they're chattier than a parrot)
+2. Blame the AI (it probably knows what it did)
+3. Restart everything (the digital equivalent of turning it off and on again)
+4. If all else fails, commit your crimes and sail away 🏴‍☠️
+```
+
+### **API Documentation**
+```markdown
+### POST /api/plunder
+Steals—er, *borrows*—data from the seven databases of productivity.
+
+**Request Body:**
+```json
+{
+  "treasure_type": "user_data",
+  "crew_id": "your-api-key-here",
+  "urgency": "kraken-level"  // optional, but recommended
+}
+```
+
+**Response:**
+Your treasure, served faster than grog at a tavern.
+```
+
+## Battle Cry
+**"Code fast, ship faster, let the AI handle the rest!"**
+
+Remember: We're not just developers—we're digital pirates sailing the TypeScript seas, 
+plundering productivity, and making the landlubbers seasick with our velocity. 
+
+*Now stop reading documentation and go ship something, you beautiful sea dogs!* ⚓

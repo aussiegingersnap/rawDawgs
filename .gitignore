@@ -129,6 +129,7 @@ Thumbs.db
 # MCP Server files
 .mcp/
 mcp-*.log
+.cursor/mcp.json
 
 # Test results
 test-results/
